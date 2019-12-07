@@ -7,7 +7,7 @@ use App\Result;
 use App\Helper\MBTI;
 use Illuminate\Support\Facades\Log;
 
-class QuestionController extends Controller
+class QuestionController
 {
     public function getQuestions()
     {
@@ -26,10 +26,10 @@ class QuestionController extends Controller
         $breakdown = $data['breakdown'];
 
         //remove any stored data for that email if it already exists
-        if (Result::where('email', $email)->first()){
-            Result::where('email', $email)->delete(); 
+        if (Result::where('email', $email)->first()) {
+            Result::where('email', $email)->delete();
         }
-        
+
         Result::create([
             'email' => $email,
             'results' => $results,
@@ -42,7 +42,7 @@ class QuestionController extends Controller
     public function getResult($email)
     {
         $result = Result::where('email', $email)->first()->toJson();
-        Log::info("result: " .$result);
+        Log::info("result: " . $result);
         return $result;
     }
 }

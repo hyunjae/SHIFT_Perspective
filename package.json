@@ -22,8 +22,12 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "@rebass/forms": "^4.0.6",
+        "@rebass/preset": "^4.0.5",
         "bootstrap": "^4.4.1",
+        "emotion-theming": "^10.0.19",
         "react-async": "^10.0.0",
-        "react-router-dom": "^5.1.2"
+        "react-router-dom": "^5.1.2",
+        "rebass": "^4.0.7"
     }
 }

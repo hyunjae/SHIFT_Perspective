@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAsync } from "react-async";
+import { Box, Button, Card, Flex, Text } from "rebass";
+import { Label, Input } from "@rebass/forms";
+import { radioComponent } from "./helper/QuestionHelper";
 
 const loadQuestions = async () => {
   //get questions here
@@ -9,28 +12,43 @@ const loadQuestions = async () => {
 };
 
 const QuestionPage = props => {
+
+  //creates 10 zeros. they represent the answer for each question
+  //e.g. [1,2,0,0,0...] at index 0, value is 1. So for questions 1, the user selected leftmost radio button
+  const[selectedAnswers, setSelectedAnswers] = useState( _.range(0, 10, 0)); 
+  
+  const [email, setEmail] = useState(""); //to store email input
+
+  const handleRadio = (index, value) => {
+    selectedAnswers[index] = value; //set the value for the answered question
+    setSelectedAnswers(selectedAnswers); //set it
+  };
+  const handleEmailInput = ({ target: { value } }) => {
+    setEmail(value); //save email
+  };
   const handleSubmit = async () => {
-    const email = "test@yopmail.com";
-    const answers = [
-      { question_id: 1, value: 4 },
-      { question_id: 2, value: 3 },
-      { question_id: 3, value: 1 },
-      { question_id: 4, value: 6 },
-      { question_id: 5, value: 7 },
-      { question_id: 6, value: 3 },
-      { question_id: 7, value: 5 },
-      { question_id: 8, value: 3 },
-      { question_id: 9, value: 6 },
-      { question_id: 10, value: 6 }
-    ];
+    //check if all the questions has been answered first
+    const isAllAnswered = _.isNumber(selectedAnswers.find(value => value === 0));
+
+    //Lazy Solution. Would prompt the computer that a requirement is missing
+    if(isAllAnswered) return alert("Please answer all the questions");
+    if(email.length === 0) return alert("Please enter your email");
+
+    //Convert it to a format that the server would understand.
+    //Server sees it as {question_id: number, value: number} format
+    const answers = selectedAnswers.map((value, index) => {
+      return {question_id: index+1, value: value};
+    });
+
+    //send it to the server
     try {
       await axios.post("/api/questions", {
         email,
         answers
       });
 
-
-      props.history.push(`/result?email=${email}`)
+      //we redirect to the results page
+      props.history.push(`/result?email=${email}`);
     } catch (err) {
       console.error(err);
     }
@@ -41,35 +59,49 @@ const QuestionPage = props => {
   if (isPending) return "Loading...";
   if (error) return `Something went wrong: ${error.message}`;
   if (data) {
-    const list = data.map(question => {
+    const list = data.map((question, index) => {
       return (
-        <div>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">{question}</label>
-            <div class="col-sm-8">
-              <input type="radio" name="rank" value="1" />
-              <input type="radio" name="rank" value="2" />
-              <input type="radio" name="rank" value="3" />
-              <input type="radio" name="rank" value="4" />
-              <input type="radio" name="rank" value="5" />
-              <input type="radio" name="rank" value="6" />
-              <input type="radio" name="rank" value="7" />
-            </div>
-          </div>
-        </div>
+        <Card>
+          <Flex my={4}>
+            <Box width={1}>
+              <Text textAlign="center">{question}</Text>
+            </Box>
+          </Flex>
+          {radioComponent(index, handleRadio)}
+        </Card>
       );
     });
 
     return (
-      <form>
-        <h1>Discover your Perspective</h1>
-        <label>
-          Complete the 7 min test and get a detailed report of your lenses on
-          the world
-        </label>
-        <div>{list}</div>
-        <div onClick={handleSubmit}>Save and continue</div>
-      </form>
+      <>
+        <Flex my={2} ml={4}>
+          <Text fontSize={3} fontWeight="bold" color="primary">
+            Discover your Perspective
+          </Text>
+        </Flex>
+        <Flex my={2} ml={4}>
+          <Text fontSize={2} fontWeight="normal" color="primary">
+            Complete the 7 min test and get a detailed report of your lenses on
+            the world
+          </Text>
+        </Flex>
+        <Flex my={4} justifyContent="center">
+          <Box width={[1, 2 / 3]} as="form" onSubmit={e => e.preventDefault()}>
+            {list}
+            <Card>
+              <Box>
+                <Text textAlign="center">Your Email</Text>
+              </Box>
+              <Flex mx={4}>
+                <Input id="email" name="email" type="email" onChange={handleEmailInput}/>
+              </Flex>
+            </Card>
+            <Box textAlign="center">
+              <Button onClick={handleSubmit}> Save & Continue</Button>
+            </Box>
+          </Box>
+        </Flex>
+      </>
     );
   }
   return null;
