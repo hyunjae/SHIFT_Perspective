@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helper;
+use Illuminate\Support\Facades\Log;
 
 class MBTI {
 	const QUESTIONS = [
@@ -64,14 +65,6 @@ class MBTI {
 			"direction" => 1,
 		],
 	];
-	
-	static function debug_to_console($data) {
-		$output = $data;
-		if (is_array($output))
-			$output = implode(',', $output);
-	
-		echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-	}
     
     static function getQuestions(){
 		$list = [];
@@ -122,7 +115,7 @@ class MBTI {
 		}
 
 		return [
-			'results' => implode($results, ''),
+			'results' => implode('', $results),
 			'breakdown' => $breakdown
 		];
 	}	

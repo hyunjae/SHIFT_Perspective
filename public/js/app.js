@@ -56693,6 +56693,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _QuestionPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./QuestionPage */ "./resources/js/components/QuestionPage.js");
+/* harmony import */ var _ResultPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ResultPage */ "./resources/js/components/ResultPage.js");
+
 
 
 
@@ -56700,7 +56702,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-    exact: true,
+    path: "/result",
+    component: _ResultPage__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: "/",
     component: _QuestionPage__WEBPACK_IMPORTED_MODULE_3__["default"]
   })));
@@ -56758,7 +56762,70 @@ var loadQuestions = function loadQuestions() {
   });
 };
 
-var QuestionPage = function QuestionPage() {
+var QuestionPage = function QuestionPage(props) {
+  var handleSubmit = function handleSubmit() {
+    var email, answers;
+    return _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0___default.a.async(function handleSubmit$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            email = "test@yopmail.com";
+            answers = [{
+              question_id: 1,
+              value: 4
+            }, {
+              question_id: 2,
+              value: 3
+            }, {
+              question_id: 3,
+              value: 1
+            }, {
+              question_id: 4,
+              value: 6
+            }, {
+              question_id: 5,
+              value: 7
+            }, {
+              question_id: 6,
+              value: 3
+            }, {
+              question_id: 7,
+              value: 5
+            }, {
+              question_id: 8,
+              value: 3
+            }, {
+              question_id: 9,
+              value: 6
+            }, {
+              question_id: 10,
+              value: 6
+            }];
+            _context2.prev = 2;
+            _context2.next = 5;
+            return _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/questions", {
+              email: email,
+              answers: answers
+            }));
+
+          case 5:
+            props.history.push("/result?email=".concat(email));
+            _context2.next = 11;
+            break;
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](2);
+            console.error(_context2.t0);
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, null, [[2, 8]]);
+  };
+
   var _useAsync = Object(react_async__WEBPACK_IMPORTED_MODULE_3__["useAsync"])({
     promiseFn: loadQuestions
   }),
@@ -56766,12 +56833,10 @@ var QuestionPage = function QuestionPage() {
       error = _useAsync.error,
       isPending = _useAsync.isPending;
 
-  console.log(error);
   if (isPending) return "Loading...";
   if (error) return "Something went wrong: ".concat(error.message);
 
   if (data) {
-    console.log(data);
     var list = data.map(function (question) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         "class": "form-group"
@@ -56809,13 +56874,88 @@ var QuestionPage = function QuestionPage() {
         value: "7"
       }))));
     });
-    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Discover your Perspective"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Complete the 7 min test and get a detailed report of your lenses on the world"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, list));
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Discover your Perspective"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Complete the 7 min test and get a detailed report of your lenses on the world"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, list), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      onClick: handleSubmit
+    }, "Save and continue"));
   }
 
   return null;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (QuestionPage);
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultPage.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ResultPage.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator/index.js */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_async__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-async */ "./node_modules/react-async/dist-web/index.js");
+
+
+
+
+
+var loadResult = function loadResult(_ref) {
+  var email, _ref2, data;
+
+  return _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0___default.a.async(function loadResult$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          email = _ref.email;
+          //get result here
+          console.log(email);
+          _context.next = 4;
+          return _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/results/".concat(email)));
+
+        case 4:
+          _ref2 = _context.sent;
+          data = _ref2.data;
+          return _context.abrupt("return", data);
+
+        case 7:
+        case "end":
+          return _context.stop();
+      }
+    }
+  });
+};
+
+var ResultPage = function ResultPage(props) {
+  var params = new URLSearchParams(props.location.search);
+  var email = params.get("email") || "";
+
+  var _useAsync = Object(react_async__WEBPACK_IMPORTED_MODULE_3__["useAsync"])({
+    promiseFn: loadResult,
+    email: email
+  }),
+      data = _useAsync.data,
+      error = _useAsync.error,
+      isPending = _useAsync.isPending;
+
+  if (isPending) return "Loading...";
+  if (error) return "Something went wrong: ".concat(error.message);
+
+  if (data) {
+    console.log(data);
+  }
+
+  return null;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ResultPage);
 
 /***/ }),
 

@@ -8,15 +8,39 @@ const loadQuestions = async () => {
   return data;
 };
 
-const QuestionPage = () => {
+const QuestionPage = props => {
+  const handleSubmit = async () => {
+    const email = "test@yopmail.com";
+    const answers = [
+      { question_id: 1, value: 4 },
+      { question_id: 2, value: 3 },
+      { question_id: 3, value: 1 },
+      { question_id: 4, value: 6 },
+      { question_id: 5, value: 7 },
+      { question_id: 6, value: 3 },
+      { question_id: 7, value: 5 },
+      { question_id: 8, value: 3 },
+      { question_id: 9, value: 6 },
+      { question_id: 10, value: 6 }
+    ];
+    try {
+      await axios.post("/api/questions", {
+        email,
+        answers
+      });
+
+
+      props.history.push(`/result?email=${email}`)
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const { data, error, isPending } = useAsync({
     promiseFn: loadQuestions
   });
-  console.log(error);
   if (isPending) return "Loading...";
   if (error) return `Something went wrong: ${error.message}`;
   if (data) {
-    console.log(data);
     const list = data.map(question => {
       return (
         <div>
@@ -35,6 +59,7 @@ const QuestionPage = () => {
         </div>
       );
     });
+
     return (
       <form>
         <h1>Discover your Perspective</h1>
@@ -43,6 +68,7 @@ const QuestionPage = () => {
           the world
         </label>
         <div>{list}</div>
+        <div onClick={handleSubmit}>Save and continue</div>
       </form>
     );
   }

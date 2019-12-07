@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('questions', 'QuestionController@show');
+Route::get('questions', 'QuestionController@getQuestions');
 Route::post('questions', 'QuestionController@store');
-Route::get('results', 'QuestionController@results');
+Route::get('results/{email}', 'QuestionController@getResult');

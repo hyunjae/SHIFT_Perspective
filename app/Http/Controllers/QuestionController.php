@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Question;
+use App\Result;
 use App\Helper\MBTI;
+use Illuminate\Support\Facades\Log;
 
 class QuestionController extends Controller
 {
-    public function show()
+    public function getQuestions()
     {
         $questions = MBTI::getQuestions();
         return $questions;
@@ -16,28 +17,32 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
-        Question::table()->delete();
+        $validatedData = $request->validate(['email' => 'required']);
+        $email = $validatedData['email']; //validate email
+        $answers = $request->answers;
 
-        foreach ($request as $data) {
-            $validatedData = $data->validate([
-                'question_id' => 'required',
-                'value' => 'required',
-            ]);
+        $data = MBTI::calculateMBTI($answers);
+        $results = $data['results'];
+        $breakdown = $data['breakdown'];
 
-            Question::create([
-                'question_id' => $validatedData['question_id'],
-                'value' => $validatedData['value'],
-            ]);
+        //remove any stored data for that email if it already exists
+        if (Result::where('email', $email)->first()){
+            Result::where('email', $email)->delete(); 
         }
+        
+        Result::create([
+            'email' => $email,
+            'results' => $results,
+            'breakdown' => $breakdown
+        ]);
 
-        return response()->json('Queations Submitted!');
+        return response()->json('Questions Submitted!');
     }
 
-    public function results()
+    public function getResult($email)
     {
-        $answers = Question::orderBy('created_at', 'desc')->get();
-        $result = MBTI::calculateMBTI($answers);
-
-        return $result->toJson();
+        $result = Result::where('email', $email)->first()->toJson();
+        Log::info("result: " .$result);
+        return $result;
     }
 }
