@@ -8,7 +8,7 @@ const RadioComponent = ({index, handleRadio}) => {
   const item = radioOptions.map(value => {
     const id = `Q${index}R${value}`;
     return (
-      <Box width={[1, 1, 1 / 9]}>
+      <Box width={[1, 1, 1 / 9]} key={id} >
         <Label>
           <Radio
             name={`Q${index}`}

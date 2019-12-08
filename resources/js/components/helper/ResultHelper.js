@@ -19,7 +19,7 @@ const DimensionComponent = ({ breakdown }) => {
   const DimensionUI = Dimensions.map((types, index) => {
     const isFirstDimension = calculateWhichDimensions(breakdown, index);
     return (
-      <Flex mx={4}>
+      <Flex mx={4} key={index}>
         <Box width={[1, 1 / 4]}>
           <Text fontSize={2} fontWeight="normal" color="darkGrey">
             {types[0]}

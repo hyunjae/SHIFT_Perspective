@@ -61300,7 +61300,7 @@ var QuestionPage = function QuestionPage(props) {
             //check if all the questions has been answered first
             isAllAnswered = _.isNumber(selectedAnswers.find(function (value) {
               return value === 0;
-            })); //Lazy Solution. Would prompt the computer that a requirement is missing
+            })); //Lazy Solution. Would prompt the browser that a requirement is missing
 
             if (!isAllAnswered) {
               _context2.next = 3;
@@ -61365,7 +61365,9 @@ var QuestionPage = function QuestionPage(props) {
 
   if (data) {
     var questionList = data.map(function (question, index) {
-      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Card"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Card"], {
+        key: index
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
         my: 4
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], {
         width: 1
@@ -61378,14 +61380,14 @@ var QuestionPage = function QuestionPage(props) {
     });
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
       my: 2,
-      ml: 4
+      mx: 4
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
       fontSize: 3,
       fontWeight: "bold",
       color: "primary"
     }, "Discover your Perspective")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
       my: 2,
-      ml: 4
+      mx: 4
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
       fontSize: 2,
       fontWeight: "normal",
@@ -61555,7 +61557,8 @@ var RadioComponent = function RadioComponent(_ref) {
   var item = radioOptions.map(function (value) {
     var id = "Q".concat(index, "R").concat(value);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_1__["Box"], {
-      width: [1, 1, 1 / 9]
+      width: [1, 1, 1 / 9],
+      key: id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_forms__WEBPACK_IMPORTED_MODULE_2__["Label"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_forms__WEBPACK_IMPORTED_MODULE_2__["Radio"], {
       name: "Q".concat(index),
       id: id,
@@ -61614,7 +61617,8 @@ var DimensionComponent = function DimensionComponent(_ref) {
   var DimensionUI = Dimensions.map(function (types, index) {
     var isFirstDimension = calculateWhichDimensions(breakdown, index);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Flex"], {
-      mx: 4
+      mx: 4,
+      key: index
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Box"], {
       width: [1, 1 / 4]
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Text"], {

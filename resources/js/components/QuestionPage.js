@@ -32,7 +32,7 @@ const QuestionPage = props => {
     //check if all the questions has been answered first
     const isAllAnswered = _.isNumber(selectedAnswers.find(value => value === 0));
 
-    //Lazy Solution. Would prompt the computer that a requirement is missing
+    //Lazy Solution. Would prompt the browser that a requirement is missing
     if(isAllAnswered) return alert("Please answer all the questions");
     if(email.length === 0) return alert("Please enter your email");
 
@@ -65,7 +65,7 @@ const QuestionPage = props => {
   if (data) {
     const questionList = data.map((question, index) => {
       return (
-        <Card>
+        <Card key={index}>
           <Flex my={4}>
             <Box width={1}>
               <Text textAlign="center">{question}</Text>
@@ -78,12 +78,12 @@ const QuestionPage = props => {
 
     return (
       <>
-        <Flex my={2} ml={4}>
+        <Flex my={2} mx={4}>
           <Text fontSize={3} fontWeight="bold" color="primary">
             Discover your Perspective
           </Text>
         </Flex>
-        <Flex my={2} ml={4}>
+        <Flex my={2} mx={4}>
           <Text fontSize={2} fontWeight="normal" color="black">
             Complete the 7 min test and get a detailed report of your lenses on
             the world
