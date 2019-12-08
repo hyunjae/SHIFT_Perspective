@@ -34,4 +34,4 @@ or
 - `php artisan key:generate`
 - `touch database/database.sqlite`
 - `php artisan migrate`
-- `php artisan serve` (is what stsrts the app at http://localhost:8000/)
+- `php artisan serve` (is what starts the app at http://localhost:8000/)
