@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useAsync } from "react-async";
 import { Box, Button, Card, Flex, Text } from "rebass";
-import { Label, Input } from "@rebass/forms";
-import { radioComponent } from "./helper/QuestionHelper";
+import { Input } from "@rebass/forms";
+import { RadioComponent } from "./helper/QuestionHelper";
 
 const loadQuestions = async () => {
   //get questions here
@@ -23,9 +23,11 @@ const QuestionPage = props => {
     selectedAnswers[index] = value; //set the value for the answered question
     setSelectedAnswers(selectedAnswers); //set it
   };
+
   const handleEmailInput = ({ target: { value } }) => {
     setEmail(value); //save email
   };
+
   const handleSubmit = async () => {
     //check if all the questions has been answered first
     const isAllAnswered = _.isNumber(selectedAnswers.find(value => value === 0));
@@ -53,13 +55,15 @@ const QuestionPage = props => {
       console.error(err);
     }
   };
+
   const { data, error, isPending } = useAsync({
     promiseFn: loadQuestions
   });
+
   if (isPending) return "Loading...";
   if (error) return `Something went wrong: ${error.message}`;
   if (data) {
-    const list = data.map((question, index) => {
+    const questionList = data.map((question, index) => {
       return (
         <Card>
           <Flex my={4}>
@@ -67,7 +71,7 @@ const QuestionPage = props => {
               <Text textAlign="center">{question}</Text>
             </Box>
           </Flex>
-          {radioComponent(index, handleRadio)}
+          <RadioComponent index={index} handleRadio={handleRadio} />
         </Card>
       );
     });
@@ -80,15 +84,15 @@ const QuestionPage = props => {
           </Text>
         </Flex>
         <Flex my={2} ml={4}>
-          <Text fontSize={2} fontWeight="normal" color="primary">
+          <Text fontSize={2} fontWeight="normal" color="black">
             Complete the 7 min test and get a detailed report of your lenses on
             the world
           </Text>
         </Flex>
         <Flex my={4} justifyContent="center">
           <Box width={[1, 2 / 3]} as="form" onSubmit={e => e.preventDefault()}>
-            {list}
-            <Card>
+            {questionList}
+            <Card color="black">
               <Box>
                 <Text textAlign="center">Your Email</Text>
               </Box>
@@ -96,8 +100,8 @@ const QuestionPage = props => {
                 <Input id="email" name="email" type="email" onChange={handleEmailInput}/>
               </Flex>
             </Card>
-            <Box textAlign="center">
-              <Button onClick={handleSubmit}> Save & Continue</Button>
+            <Box textAlign="center" my={2}>
+              <Button onClick={handleSubmit} bg="blue"> Save & Continue</Button>
             </Box>
           </Box>
         </Flex>

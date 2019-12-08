@@ -61159,6 +61159,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _rebass_preset__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_rebass_preset__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _QuestionPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./QuestionPage */ "./resources/js/components/QuestionPage.js");
 /* harmony import */ var _ResultPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ResultPage */ "./resources/js/components/ResultPage.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -61166,10 +61171,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var additionalTheme = {
+  colors: {
+    black: "#495057",
+    purple: "#A920CB",
+    darkgrey: "#878787",
+    grey: "#E9ECEF",
+    red: "#FA4344",
+    green: "#00A079",
+    blue: "#3D59FA",
+    primary: '#113264'
+  }
+};
+
+var CustomTheme = _objectSpread({}, additionalTheme, {}, _rebass_preset__WEBPACK_IMPORTED_MODULE_4___default.a);
 
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(emotion_theming__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
-    theme: _rebass_preset__WEBPACK_IMPORTED_MODULE_4___default.a
+    theme: CustomTheme
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: "/result",
     component: _ResultPage__WEBPACK_IMPORTED_MODULE_6__["default"]
@@ -61344,14 +61364,17 @@ var QuestionPage = function QuestionPage(props) {
   if (error) return "Something went wrong: ".concat(error.message);
 
   if (data) {
-    var list = data.map(function (question, index) {
+    var questionList = data.map(function (question, index) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Card"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
         my: 4
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], {
         width: 1
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
         textAlign: "center"
-      }, question))), Object(_helper_QuestionHelper__WEBPACK_IMPORTED_MODULE_6__["radioComponent"])(index, handleRadio));
+      }, question))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_helper_QuestionHelper__WEBPACK_IMPORTED_MODULE_6__["RadioComponent"], {
+        index: index,
+        handleRadio: handleRadio
+      }));
     });
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
       my: 2,
@@ -61366,7 +61389,7 @@ var QuestionPage = function QuestionPage(props) {
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
       fontSize: 2,
       fontWeight: "normal",
-      color: "primary"
+      color: "black"
     }, "Complete the 7 min test and get a detailed report of your lenses on the world")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
       my: 4,
       justifyContent: "center"
@@ -61376,7 +61399,9 @@ var QuestionPage = function QuestionPage(props) {
       onSubmit: function onSubmit(e) {
         return e.preventDefault();
       }
-    }, list, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Card"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
+    }, questionList, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Card"], {
+      color: "black"
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
       textAlign: "center"
     }, "Your Email")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
       mx: 4
@@ -61386,9 +61411,11 @@ var QuestionPage = function QuestionPage(props) {
       type: "email",
       onChange: handleEmailInput
     }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], {
-      textAlign: "center"
+      textAlign: "center",
+      my: 2
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Button"], {
-      onClick: handleSubmit
+      onClick: handleSubmit,
+      bg: "blue"
     }, " Save & Continue")))));
   }
 
@@ -61415,6 +61442,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_async__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-async */ "./node_modules/react-async/dist-web/index.js");
+/* harmony import */ var rebass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rebass */ "./node_modules/rebass/dist/index.esm.js");
+/* harmony import */ var _helper_ResultHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helper/ResultHelper */ "./resources/js/components/helper/ResultHelper.js");
+
+
 
 
 
@@ -61428,17 +61459,15 @@ var loadResult = function loadResult(_ref) {
       switch (_context.prev = _context.next) {
         case 0:
           email = _ref.email;
-          //get result here
-          console.log(email);
-          _context.next = 4;
+          _context.next = 3;
           return _babel_runtime_regenerator_index_js__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/results/".concat(email)));
 
-        case 4:
+        case 3:
           _ref2 = _context.sent;
           data = _ref2.data;
           return _context.abrupt("return", data);
 
-        case 7:
+        case 6:
         case "end":
           return _context.stop();
       }
@@ -61462,7 +61491,33 @@ var ResultPage = function ResultPage(props) {
   if (error) return "Something went wrong: ".concat(error.message);
 
   if (data) {
-    console.log(data);
+    var results = data.results,
+        breakdown = data.breakdown;
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Card"], {
+      m: 3
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
+      my: 2
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], {
+      width: [1, 1 / 2]
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
+      my: 2,
+      ml: 4
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
+      fontSize: 3,
+      fontWeight: "bold",
+      color: "primary"
+    }, "Your Perspective")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Flex"], {
+      my: 2,
+      ml: 4
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Text"], {
+      fontSize: 2,
+      fontWeight: "normal",
+      color: "black"
+    }, "Your Perspective Type is ", results))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_4__["Box"], {
+      width: [1, 1 / 2]
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_helper_ResultHelper__WEBPACK_IMPORTED_MODULE_5__["DimensionComponent"], {
+      breakdown: breakdown
+    }))));
   }
 
   return null;
@@ -61476,12 +61531,12 @@ var ResultPage = function ResultPage(props) {
 /*!**********************************************************!*\
   !*** ./resources/js/components/helper/QuestionHelper.js ***!
   \**********************************************************/
-/*! exports provided: radioComponent */
+/*! exports provided: RadioComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "radioComponent", function() { return radioComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioComponent", function() { return RadioComponent; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var rebass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rebass */ "./node_modules/rebass/dist/index.esm.js");
@@ -61490,7 +61545,10 @@ __webpack_require__.r(__webpack_exports__);
 
  //renders 7 radio button with labels 'disagree' left side and 'agree' right side
 
-var radioComponent = function radioComponent(index, handleRadio) {
+var RadioComponent = function RadioComponent(_ref) {
+  var index = _ref.index,
+      handleRadio = _ref.handleRadio;
+
   var radioOptions = _.range(1, 8); //returns a list of numbers from 1 to 7
 
 
@@ -61513,9 +61571,78 @@ var radioComponent = function radioComponent(index, handleRadio) {
     flexWrap: "wrap"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_1__["Box"], {
     width: [1, 1, 1 / 9]
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_forms__WEBPACK_IMPORTED_MODULE_2__["Label"], null, "Disagree")), item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_1__["Box"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_forms__WEBPACK_IMPORTED_MODULE_2__["Label"], {
+    color: "red"
+  }, "Disagree")), item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_1__["Box"], {
     width: [1, 1, 1 / 9]
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_forms__WEBPACK_IMPORTED_MODULE_2__["Label"], null, "Agree")));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_forms__WEBPACK_IMPORTED_MODULE_2__["Label"], {
+    color: "green"
+  }, "Agree")));
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/helper/ResultHelper.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/helper/ResultHelper.js ***!
+  \********************************************************/
+/*! exports provided: DimensionComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DimensionComponent", function() { return DimensionComponent; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var rebass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rebass */ "./node_modules/rebass/dist/index.esm.js");
+
+
+
+var Dimensions = [["Extraversion (E)", "Introversion (I)"], ["Sensing (S)", "Intuition (N)"], ["Thinking (T)", "Feeling (F)"], ["Judging (J)", "Perceiving (P)"]];
+var shortDimen = ["EI", "JP", "SN", "TF"];
+
+var calculateWhichDimensions = function calculateWhichDimensions(breakdown, index) {
+  return breakdown[shortDimen[index]] <= 50;
+};
+
+var DimensionComponent = function DimensionComponent(_ref) {
+  var breakdown = _ref.breakdown;
+  var DimensionUI = Dimensions.map(function (types, index) {
+    var isFirstDimension = calculateWhichDimensions(breakdown, index);
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Flex"], {
+      mx: 4
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      width: [1, 1 / 4]
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Text"], {
+      fontSize: 2,
+      fontWeight: "normal",
+      color: "darkGrey"
+    }, types[0])), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      width: [1, 2 / 4]
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Flex"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      width: [1, 1 / 2],
+      mb: 3,
+      bg: isFirstDimension ? "purple" : "grey",
+      color: isFirstDimension ? "purple" : "grey"
+    }, "_"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      width: [1, 1 / 2],
+      mb: 3,
+      bg: isFirstDimension ? "grey" : "purple",
+      color: isFirstDimension ? "grey" : "purple"
+    }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      width: [1, 1 / 4]
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(rebass__WEBPACK_IMPORTED_MODULE_2__["Text"], {
+      fontSize: 2,
+      fontWeight: "normal",
+      color: "darkGrey",
+      textAlign: "right"
+    }, types[1])));
+  });
+  return DimensionUI;
 };
 
 
